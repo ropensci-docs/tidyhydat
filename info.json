@@ -1,0 +1,12 @@
+{
+  "commit": {
+    "commit": "efb5d9c842edc3f50e2a645ad2ae70b027c3b7b2",
+    "author": "Sam Albers <sam.albers@gov.bc.ca>",
+    "time": "2021-06-30 23:11:33",
+    "files": 4,
+    "merge": true,
+    "message": "Merge branch 'main' of https://github.com/ropensci/tidyhydat into main\n"
+  },
+  "remote": "https://github.com/ropensci/tidyhydat",
+  "pkg": "tidyhydat"
+}
