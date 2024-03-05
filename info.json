@@ -1,0 +1,12 @@
+{
+  "commit": {
+    "commit": "af345e42d10043650d66076d2d518672a21ca5f8",
+    "author": "Sam Albers <sam.albers@gmail.com>",
+    "time": "2024-01-11 17:22:27",
+    "files": 17,
+    "merge": false,
+    "message": "Version 0.6.1 (#202)\n\n* bump versions\r\n\r\n* dev version\r\n\r\n* fix webserivce too\r\n\r\n* update README\r\n\r\n* typo\r\n\r\n* fix to be utc\r\n\r\n* change to character\r\n\r\n* update news\r\n\r\n* update cran comments\r\n\r\n* update README\r\n\r\n* update internal data again\r\n\r\n* update version\r\n\r\n* skip on cran"
+  },
+  "repo": "https://github.com/ropensci/tidyhydat",
+  "pkg": "tidyhydat"
+}

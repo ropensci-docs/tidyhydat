@@ -1,0 +1,12 @@
+pandoc: 2.16.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  tidyhydat_an_introduction: tidyhydat_an_introduction.html
+  tidyhydat_example_analysis: tidyhydat_example_analysis.html
+  tidyhydat_hydat_db: tidyhydat_hydat_db.html
+last_built: 2024-03-05T06:40Z
+urls:
+  reference: https://docs.ropensci.org/tidyhydat/reference
+  article: https://docs.ropensci.org/tidyhydat/articles
+
