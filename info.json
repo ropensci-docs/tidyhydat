@@ -1,0 +1,13 @@
+{
+  "commit": {
+    "commit": "22b57fed0671906796959fdeb8726a4685424802",
+    "author": "Sam Albers <sam.albers@hakai.org>",
+    "time": "2026-06-11T20:35:50Z",
+    "files": 55,
+    "merge": false,
+    "message": "Fix bug where station ranges weren't being properly being calculated (#243)\n\n* handle overlap between two sources properly.\n\n* use dplyr\n\n* silence readr 2.2.0 warning\n\n* bump checkout\n\n* validate string and air\n\n* bump again\n\n* add test\n\n* update NEWS\n\n* release process steps\n\n* update cran comments"
+  },
+  "repo": "https://github.com/ropensci/tidyhydat",
+  "pkg": "tidyhydat",
+  "time": "2026-08-30T07:42:18Z"
+}
