@@ -1,0 +1,116 @@
+# Stepping into the HYDAT Database
+
+The HYDAT database is a massive hydrologic data resource. The functions
+in this package are designed to get the most out of the HYDAT database
+as quickly as possible, however in the process of reformatting the data
+to be more useful, the package modifies the original tables. This
+vignette is intended to demonstrate how to access tables within the
+database for your own custom HYDAT analysis, should additional
+information be needed. This should not be necessary for the vast
+majority of users, and is intended only for advanced R users.
+
+## Downloading HYDAT
+
+Before loading the HYDAT database, the latest version of the database
+must be downloaded using `hydat_download()`. This is a fairly lengthy
+operation (the download is around 1 GB) and may require several cups of
+coffee worth of your time.
+
+``` r
+
+hydat_download()
+```
+
+## Working with HYDAT tables
+
+The HYDAT database is a SQLite database, which can be accessed in R
+using the [dplyr](https://dplyr.tidyverse.org/) and
+[dbplyr](https://dbplyr.tidyverse.org/) packages. This package has
+simplified the connection process, so all you have to do to connect to
+the database is use
+[`hy_src()`](https://docs.ropensci.org/tidyhydat/reference/hy_src.md).
+
+``` r
+
+src <- hy_src()
+```
+
+To list the tables, use
+[`src_tbls()`](https://dplyr.tidyverse.org/reference/src_tbls.html) from
+the **dplyr** package.
+
+``` r
+
+src_tbls(src)
+#>  [1] "AGENCY_LIST"            "ANNUAL_INSTANT_PEAKS"   "ANNUAL_STATISTICS"      "CONCENTRATION_SYMBOLS"  "DATA_SYMBOLS"          
+#>  [6] "DATA_TYPES"             "DATUM_LIST"             "DLY_FLOWS"              "DLY_LEVELS"             "MEASUREMENT_CODES"     
+#> [11] "OPERATION_CODES"        "PEAK_CODES"             "PRECISION_CODES"        "REGIONAL_OFFICE_LIST"   "SAMPLE_REMARK_CODES"   
+#> [16] "SED_DATA_TYPES"         "SED_DLY_LOADS"          "SED_DLY_SUSCON"         "SED_SAMPLES"            "SED_SAMPLES_PSD"       
+#> [21] "SED_VERTICAL_LOCATION"  "SED_VERTICAL_SYMBOLS"   "STATIONS"               "STN_DATA_COLLECTION"    "STN_DATA_RANGE"        
+#> [26] "STN_DATUM_CONVERSION"   "STN_DATUM_UNRELATED"    "STN_OPERATION_SCHEDULE" "STN_REGULATION"         "STN_REMARKS"           
+#> [31] "STN_REMARK_CODES"       "STN_STATUS_CODES"       "VERSION"
+```
+
+To inspect any particular table, use the
+[`tbl()`](https://dplyr.tidyverse.org/reference/tbl.html) function with
+the `src` and the table name.
+
+``` r
+
+tbl(src, "STN_OPERATION_SCHEDULE")
+#> # Source:   table<`STN_OPERATION_SCHEDULE`> [?? x 5]
+#> # Database: sqlite 3.53.1 [/Users/sam.albers/_dev/gh_repos/tidyhydat/inst/test_db/tinyhydat.sqlite3]
+#>    STATION_NUMBER DATA_TYPE  YEAR MONTH_FROM MONTH_TO
+#>    <chr>          <chr>     <int> <chr>      <chr>   
+#>  1 05AA008        H          2012 JAN        DEC     
+#>  2 05AA008        H          2013 JAN        DEC     
+#>  3 05AA008        H          2014 JAN        DEC     
+#>  4 05AA008        H          2015 JAN        DEC     
+#>  5 05AA008        H          2016 JAN        DEC     
+#>  6 05AA008        H          2017 JAN        DEC     
+#>  7 05AA008        H          2018 JAN        DEC     
+#>  8 05AA008        H          2019 JAN        DEC     
+#>  9 05AA008        H          2020 JAN        DEC     
+#> 10 05AA008        Q          1910 <NA>       <NA>    
+#> # ℹ more rows
+```
+
+Working with SQL tables in dplyr is much like working with regular data
+frames, except no data is actually read from the database until
+necessary. Because some of these tables are large (particularly those
+containing the actual data), you will want to
+[`filter()`](https://dplyr.tidyverse.org/reference/filter.html) the
+tables before you
+[`collect()`](https://dplyr.tidyverse.org/reference/compute.html) them
+(the [`collect()`](https://dplyr.tidyverse.org/reference/compute.html)
+operation loads them into memory as a `data.frame`).
+
+``` r
+
+tbl(src, "STN_OPERATION_SCHEDULE") |>
+  filter(STATION_NUMBER == "05AA008") |>
+  collect()
+#> # A tibble: 103 × 5
+#>    STATION_NUMBER DATA_TYPE  YEAR MONTH_FROM MONTH_TO
+#>    <chr>          <chr>     <int> <chr>      <chr>   
+#>  1 05AA008        H          2012 JAN        DEC     
+#>  2 05AA008        H          2013 JAN        DEC     
+#>  3 05AA008        H          2014 JAN        DEC     
+#>  4 05AA008        H          2015 JAN        DEC     
+#>  5 05AA008        H          2016 JAN        DEC     
+#>  6 05AA008        H          2017 JAN        DEC     
+#>  7 05AA008        H          2018 JAN        DEC     
+#>  8 05AA008        H          2019 JAN        DEC     
+#>  9 05AA008        H          2020 JAN        DEC     
+#> 10 05AA008        Q          1910 <NA>       <NA>    
+#> # ℹ 93 more rows
+```
+
+When you are finished with the database (i.e., the end of the script),
+it is good practice to close the connection (you may get a loud red
+warning if you don’t!).
+
+``` r
+
+hy_src_disconnect(src)
+```

@@ -1,0 +1,13 @@
+{
+  "commit": {
+    "commit": "a9b1ab494134e42258ea5f61668751c59c4cf2e7",
+    "author": "Sam Albers <sam.albers@hakai.org>",
+    "time": "2026-11-06T18:08:54Z",
+    "files": 3,
+    "merge": false,
+    "message": "first french draft (#244)\n\n* first french draft\n\n* re-knit\n\n* drop copyright"
+  },
+  "repo": "https://github.com/ropensci/tidyhydat",
+  "pkg": "tidyhydat",
+  "time": "2026-11-06T18:48:58Z"
+}
